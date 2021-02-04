@@ -1,1 +1,1 @@
-# TikTok-Clone_Backend
+# Backend of a MERN Stack TikTok Clone
