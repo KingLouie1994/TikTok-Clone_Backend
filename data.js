@@ -19,4 +19,4 @@ const Data = [
   },
 ];
 
-export default Data;
+exports.Data = Data;
