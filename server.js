@@ -1,10 +1,11 @@
 // Imports from thrid party libraries
-import express from "express";
-import mongoose from "mongoose";
-import dotenv from "dotenv";
+const express = require("express");
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+const bodyParser = require("body-parser");
 
-// Imports from other files
-import Data from "./data.js";
+// Imports of routes
+const postRoutes = require("./routes/posts-routes.js");
 
 // Server configuration
 const server = express();
@@ -12,15 +13,19 @@ const port = 8000;
 dotenv.config();
 
 // Middleware
+server.use(bodyParser.json());
+server.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*"),
+    res.setHeader("Access-Control-Allow-Headers", "*"),
+    next();
+});
 
 // API endpoints
 server.get("/", (req, res, next) => {
   res.status(200).send("Hello from TikTok Clone Backend");
 });
 
-server.get("/posts", (req, res, next) => {
-  res.status(200).send(Data);
-});
+server.use("/posts", postRoutes);
 
 // DB configuration
 const connection_url = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@portfolio.us1zu.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
@@ -33,7 +38,6 @@ mongoose
   .then(() => {
     server.listen(port, () => {
       console.log(`Listening on localhost:${port}`);
-      console.log(connection_url);
     });
   })
   .catch((err) => {
