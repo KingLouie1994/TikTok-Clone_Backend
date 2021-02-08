@@ -36,7 +36,7 @@ mongoose
     useNewUrlParser: true,
   })
   .then(() => {
-    server.listen(port, () => {
+    server.listen(process.env.PORT || 8000, () => {
       console.log(`Listening on localhost:${port}`);
     });
   })
