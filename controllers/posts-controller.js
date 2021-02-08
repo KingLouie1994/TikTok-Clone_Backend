@@ -1,15 +1,14 @@
 // Import model
 const Post = require("../models/post");
 
-// Import placehoder data
-const Data = require("../data");
-
 const getAllPosts = async (req, res, next) => {
+  let posts;
   try {
-    res.status(200).send(Data);
+    posts = await Post.find();
   } catch (err) {
     res.status(500).send("Receiving all posts failes, try again!");
   }
+  res.status(200).send(posts);
 };
 
 const createPost = async (req, res, next) => {
