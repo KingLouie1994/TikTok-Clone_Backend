@@ -14,6 +14,11 @@ dotenv.config();
 
 // Middleware
 server.use(bodyParser.json());
+server.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*"),
+    res.setHeader("Access-Control-Allow-Headers", "*"),
+    next();
+});
 
 // API endpoints
 server.get("/", (req, res, next) => {
